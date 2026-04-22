@@ -153,3 +153,28 @@ Er staat een knop onderaan de lijst. Als op deze knop geklikt wordt, zal er een 
 #### voorbeeldinteractie
 
 ![voorbeeldinteractie](./voorbeeldinteractie-dom-manipulatie-na-event.gif)
+
+### oefening 7: raad de knop
+
+#### leerdoelen
+
+* dynamisch DOM-elementen aanmaken en toevoegen
+* event listeners toevoegen aan dynamisch aangemaakte elementen
+* willekeurige getallen genereren
+
+#### functionele analyse
+
+Er worden 100 knoppen op de pagina geplaatst. Precies 3 ervan zijn de "juiste" knoppen. De gebruiker moet proberen deze te vinden door erop te klikken. Klikken op een juiste knop markeert hem groen en geeft feedback. Klikken op een foute knop geeft een korte rode markering. Wanneer alle 3 juiste knoppen gevonden zijn, verschijnt er een bericht.
+
+#### technische analyse
+
+Bij het laden van de pagina voeg je via JavaScript 100 button-elementen toe aan het element met id `buttonGrid`. Kies willekeurig 3 unieke knoppen die de "juiste" zijn en log hun nummers naar de console.
+
+Voeg aan elke knop een click-event listener toe. Wanneer geklikt:
+- Is het een juiste knop: zet `disabled` op de knop, kleur hem groen, en update de statustekst (pas een class toe, bijvoorbeeld `found`, die de groene kleur en eventuele andere stijlen bevat).
+- Is het een foute knop: zet `disabled` op de knop en kleur hem rood. (pas een class toe, bijvoorbeeld `miss`, die de rode kleur en eventuele andere stijlen bevat).
+
+Wanneer alle 3 juiste knoppen gevonden zijn, toon je een felicitatiesbericht in het element met id `status`.
+
+#### voorbeeldinteractie
+![voorbeeldinteractie](./voorbeeldinteractie-buttons.gif)
