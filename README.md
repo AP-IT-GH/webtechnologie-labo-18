@@ -232,3 +232,26 @@ Je zal het formulier afhandelen in JavaScript.
 #### voorbeeldinteractie
 
 ![voorbeeldinteractie](./faq.gif)
+
+### oefening 10: modale dialoog
+
+#### leerdoelen
+
+* het `dialog`-element gebruiken
+* een dialoog openen en sluiten met `showModal()` en `close()`
+* de inhoud van een dialoog vullen vanuit JavaScript
+
+#### functionele analyse
+
+Op de pagina staat een knop **Bestelling bevestigen**. Een klik daarop opent een modale dialoog met een overzicht. De gebruiker kan de dialoog sluiten met een knop of met de Escape-toets.
+
+#### technische analyse
+
+* In jouw HTML plaats je een button met een id, bijvoorbeeld "openDialog".
+* Daaronder plaats je een `dialog`-element met een id, bijvoorbeeld "orderDialog". In de dialoog staan een `h2` met de titel, een leeg `p`-element met een id (bijvoorbeeld "dialogTotal") en een knop om te sluiten.
+* In jouw JavaScript selecteer je de knop en de dialoog met `querySelector`.
+* Voeg aan de openknop een click-event listener toe die `showModal()` oproept op de dialoog. Zet vóór het openen ook een tekst in het lege `p`-element, bijvoorbeeld "Totaal: € 24,50".
+* Voeg aan de sluitknop een click-event listener toe die `close()` oproept op de dialoog.
+* Style de achtergrond van de dialoog met de pseudo-selector `dialog::backdrop`.
+
+> Deze oefening bereidt je voor op de bevestigingsdialoog in deelopdracht 5 van de projectopdracht.
