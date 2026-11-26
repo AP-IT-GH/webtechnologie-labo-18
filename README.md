@@ -255,3 +255,78 @@ Op de pagina staat een knop **Bestelling bevestigen**. Een klik daarop opent een
 * Style de achtergrond van de dialoog met de pseudo-selector `dialog::backdrop`.
 
 > Deze oefening bereidt je voor op de bevestigingsdialoog in deelopdracht 5 van de projectopdracht.
+
+## Oefeningen event delegation
+
+### oefening 11: boodschappenlijst met één listener
+
+#### leerdoelen
+
+* event delegation gebruiken: één listener op een parent-element
+* het verschil tussen `event.target` en `event.currentTarget`
+* bubbling stoppen met `stopPropagation()`
+
+#### functionele analyse
+
+Op de pagina staat een boodschappenlijst. Klik je op een item, dan wordt het doorstreept (en bij een tweede klik weer niet). Elk item heeft ook een knop "x" om het item te verwijderen. Onderaan staat een knop om een nieuw item toe te voegen. Ook de items die je nadien toevoegt reageren meteen op een klik, zonder dat je er een extra listener aan hangt.
+
+#### technische analyse
+
+In jouw HTML plaats je een `ul` met een id, bijvoorbeeld "shoppingList", met daarin enkele `li`-elementen. Elke `li` bevat de naam van het item en een `button` met de tekst "x". Onder de lijst plaats je een button met een id, bijvoorbeeld "addItem".
+
+In jouw JavaScript hang je **één** click-event listener op de `ul`, niet op elke `li` apart. Dat kan omdat een click op een `li` doorbubbelt naar de `ul`.
+
+In de handler gebruik je:
+- `event.currentTarget`: altijd de `ul`, want daar staat de listener op.
+- `event.target`: het element waarop echt geklikt werd, dus de `li` of de "x"-button.
+
+Log beide eens naar de console zodat je het verschil ziet.
+
+Is het target een `li`? Toggle dan een class, bijvoorbeeld `done`, die `text-decoration: line-through` zet. Tip: `event.target.tagName` geeft de naam van het element terug in hoofdletters.
+
+Het verwijderen regel je niet in die gedelegeerde listener, maar in een eigen click-listener op elke "x"-button. Die listener verwijdert de `li` waarin de button zit (gebruik `event.target.closest('li')`) en roept daarna `event.stopPropagation()` op, zodat de klik niet verder bubbelt naar de `ul`. Probeer eerst eens zonder `stopPropagation()`: dan loopt de handler op de `ul` ook nog en wordt de class nog toegevoegd aan een item dat al verwijderd is.
+
+De knop "nieuw item" voegt een `li` toe aan de lijst. Merk op dat je daar geen enkele listener aan moet toevoegen: de listener op de `ul` vangt de klik ook voor nieuwe items op. Dat is precies de winst van event delegation.
+
+#### voorbeeldinteractie
+
+![voorbeeldinteractie](./voorbeeldinteractie-event-delegation.gif)
+
+### oefening 12: pizza samenstellen
+
+#### leerdoelen
+
+* het `change`-event gebruiken
+* `event.target.checked` uitlezen
+* event delegation op een formulier
+
+#### functionele analyse
+
+De gebruiker stelt een pizza samen door toppings aan te vinken. Bij elke wijziging zie je meteen de lijst van gekozen toppings en de totaalprijs. Vink je een topping weer uit, dan verdwijnt hij uit de lijst en daalt de prijs.
+
+#### technische analyse
+
+In jouw HTML plaats je een `form` met een id, bijvoorbeeld "pizzaForm". Daarin staan enkele checkboxes, elk met een `value` (de naam van de topping) en een `data-price`-attribuut met de prijs, bijvoorbeeld:
+
+```html
+<label>
+  <input type="checkbox" value="mozzarella" data-price="2.50"> mozzarella (€ 2,50)
+</label>
+```
+
+Onder het formulier plaats je een `p` of `ul` voor de gekozen toppings en een `p` met een id voor het totaal.
+
+In jouw JavaScript hang je **één** `change`-event listener op het formulier. Het `change`-event van een checkbox bubbelt, dus je hoeft geen listener per checkbox te zetten.
+
+In de handler:
+- Lees `event.target.checked` uit om te weten of de topping aan- of afgevinkt werd. Log dit naar de console.
+- Haal daarna alle aangevinkte checkboxes op met `form.querySelectorAll('input[type="checkbox"]:checked')`.
+- Toon de `value` van elke aangevinkte topping op het scherm.
+- Tel de prijzen op. De prijs haal je uit het dataset-attribuut: `Number(checkbox.dataset.price)`.
+- Toon het totaal met 2 cijfers na de komma (tip: `toFixed(2)`).
+
+Is er niets aangevinkt? Toon dan "nog geen toppings gekozen" en een totaal van € 0,00.
+
+#### voorbeeldinteractie
+
+![voorbeeldinteractie](./voorbeeldinteractie-change-event.gif)
